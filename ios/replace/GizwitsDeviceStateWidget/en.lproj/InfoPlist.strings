@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  gizwits-super-app-rn
+
+  Created by william Zhang on 2020/4/13.
+  Copyright © 2020 Facebook. All rights reserved.
+*/
+CFBundleDisplayName = "智家设备状态";

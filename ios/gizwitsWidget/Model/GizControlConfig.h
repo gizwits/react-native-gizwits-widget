@@ -8,13 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "GizDevice.h"
+#import "GizConfigItem.h"
 
 #pragma mark - GizConfigDelegate
 
 @protocol GizConfigDelegate <NSObject>
 
 @optional
-- (void)attrValueChange;
+- (void)deviceDataChange:(NSDictionary*_Nullable)data;
+
+- (void)deviceOnlineChange:(BOOL)is_online;
+
+- (void)deviceControlStateChange:(NSString*_Nullable)stateName;
 
 @end
 
@@ -22,6 +27,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GizControlConfig : NSObject
+
+@property (nonatomic, strong) NSString* cid;
 
 @property (nonatomic, strong) NSString* did;
 
@@ -31,25 +38,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString* icon;
 
-@property (nonatomic, strong) NSString* attrs;
+@property (nonatomic, strong) NSString* offlineIcon;
 
-@property (nonatomic, strong) NSString* type;
+@property (nonatomic, strong) NSArray* config;
 
-@property (nonatomic, strong) NSArray* option;
+@property (nonatomic, strong) GizDevice* device;
 
 @property (nonatomic, weak) id<GizConfigDelegate> delegate;
 
-@property (nonatomic, strong) GizDevice* device;
+@property (nonatomic, strong) NSString* languageKey;
 
 +(GizControlConfig*)configByDictionary:(NSDictionary*)dic;
 
 -(NSDictionary*)deviceInfo;
 
-//获取当前设备状态的控制信息
--(NSString*)currentControlIcon;
+-(void)willSendCmd:(NSDictionary*)option;
 
-//根据当前状态获取下发的指令值
--(NSDictionary*)getNextAttrs;
+-(void)sendCmd:(NSDictionary*)option result:(BOOL)result;
+
+-(NSString*)getStateName;
+
+-(NSString*)getStringByKey:(NSString*)key;
+
+-(void)offlineTip;
 
 @end
 

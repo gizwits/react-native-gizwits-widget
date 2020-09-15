@@ -15,7 +15,9 @@
 @optional
 - (void)device:(NSString*_Nullable)did ReceivedAttrs:(NSDictionary*_Nullable)attrs;
 
-- (void)device:(NSString*_Nullable)did OnlineChange:(BOOL)isOnline;
+- (void)device:(NSString*_Nullable)did OnlineChange:(NSNumber*_Nullable)isOnline;
+
+- (void)deviceBindChange;
 
 @end
 

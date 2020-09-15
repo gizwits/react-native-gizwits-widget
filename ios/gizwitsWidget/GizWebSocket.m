@@ -336,7 +336,11 @@ BOOL const auto_subscribe = NO;
         if([self.delegate respondsToSelector:@selector(device:OnlineChange:)]){
             [self.delegate device:data[@"did"] OnlineChange:data[@"online"]];
         }
-    } else if([cmd isEqualToString:@"s2c_invalid_msg"]){
+    }else if([cmd isEqualToString:@"s2c_binding_changed"]){
+        if([self.delegate respondsToSelector:@selector(deviceBindChange)]){
+            [self.delegate deviceBindChange];
+        }
+    }  else if([cmd isEqualToString:@"s2c_invalid_msg"]){
         NSNumber* error_code = data[@"error_code"];
         NSLog(@"websocket Error:%@",data);
         if([error_code integerValue] == 1009){

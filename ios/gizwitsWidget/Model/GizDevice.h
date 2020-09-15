@@ -16,7 +16,7 @@
 
 - (void)deviceDataChange:(NSDictionary*_Nullable)data;
 
--(void)deviceOnlineStatusChange:(BOOL)is_online;
+- (void)deviceOnlineStatusChange:(BOOL)is_online;
 
 @end
 
@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString* host;
 
+@property (nonatomic, strong) NSString* name;
+
 
 +(GizDevice*)deviceByDictionary:(NSDictionary*)dic;
 
@@ -53,11 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)addListener:(id<GizDeviceWidgetDelegate>)listener;
 
-////获取当前设备状态的控制信息
-//-(NSString*)currentControlIcon;
-//
-////根据当前状态获取下发的指令值
-//-(NSDictionary*)getNextAttrs;
+-(NSDictionary*)deviceInfo;
 
 @end
 

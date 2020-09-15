@@ -10,19 +10,33 @@
 
 @interface GizControlConfig ()<GizDeviceWidgetDelegate>
 
+@property (nonatomic, strong) NSDictionary* language;
+
+@property (nonatomic, strong) NSString* currentState;
+
 @end
 
 @implementation GizControlConfig
 
 +(GizControlConfig *)configByDictionary:(NSDictionary *)dic{
     GizControlConfig* config = [[GizControlConfig alloc]init];
-    config.attrs = dic[@"attrs"];
-    config.option = dic[@"option"];
-    config.type = dic[@"type"];
+    config.cid = dic[@"id"];
     config.did = dic[@"did"];
     config.mac = dic[@"mac"];
     config.productKey = dic[@"productKey"];
+    config.language = dic[@"language"];
     config.icon = dic[@"icon"];
+    config.offlineIcon = dic[@"offlineIcon"];
+    NSMutableArray* arr = [NSMutableArray new];
+    NSArray* configs = dic[@"config"];
+    if(configs && configs.count > 0){
+        for (NSDictionary* dic in configs) {
+            GizConfigItem* item = [GizConfigItem configItemByDictionary:dic];
+            item.editName = [config getStringByKey:item.editName];
+            [arr addObject:item];
+        }
+    }
+    config.config = arr;
     return config;
 }
 
@@ -34,90 +48,89 @@
     if([device isSameFromDictionary:[self deviceInfo]]){
         _device = device;
         [_device addListener:self];
+        if(self.config && self.config.count > 0 && device.deviceData){
+           for (GizConfigItem* item in self.config) {
+               [item setDeviceData:device.deviceData];
+           }
+        }
+        if(!self.currentState){
+            [self setStateAsDevicenName];
+        }
     }
 }
 
--(NSString *)currentControlIcon{
-    if(self.device){
-        if(self.device.is_online){
-            NSDictionary* dic = [self getCurrentAttrs];
-            NSString* image = dic[@"image"];
-            if(image){
-                return image;
-            }
-        }
-        return self.icon;
-    }
-    return NULL;
+-(void)willSendCmd:(NSDictionary *)option{
+    [self cancelSetState];
+    self.currentState = @"执行中";
 }
 
--(NSDictionary *)getNextAttrs{
-    NSArray* option = self.option;
-    NSString* attrsKey = self.attrs;
-    if(option && option.count > 0){
-        NSDictionary* dic = [self getCurrentAttrs];
-        NSUInteger index = 0;
-        if(dic){
-            NSNumber* indexNum = dic[@"index"];
-            index = [indexNum integerValue];
-            index = index +1;
-            index = index%option.count;
-        }
-        NSDictionary* optionItem = option[index];
-        return @{attrsKey:optionItem[@"value"]};
+-(void)sendCmd:(NSDictionary *)option result:(BOOL)result{
+    NSString* name = option[@"name"];
+    if(!result){
+        name = @"失败";
+    } else{
+        name = [self getStringByKey:name];
     }
-    return NULL;
+    [self cancelSetState];
+    self.currentState = name;
+    [self performSelector:@selector(setStateAsDevicenName) withObject:nil afterDelay:2];
 }
 
-
-//根据当前数据点，获取设备处于哪个配置状态，没有则返回空
--(NSDictionary*)getCurrentAttrs{
-    NSArray* option = self.option;
-    if(self.device && self.device.deviceData && option && option.count > 0){
-        NSString* attrsKey = self.attrs;
-        NSString* attrsType = self.type;
-        id value = [self.device.deviceData objectForKey:attrsKey];
-        if(value){
-            NSInteger index = -1;
-            for (int i = 0; i<option.count; i++) {
-                NSDictionary* item = option[i];
-                if([attrsType isEqualToString:@"Boolean"]){
-                    NSNumber* itemValue = item[@"value"];
-                    NSNumber* v = (NSNumber*)value;
-                    if([v boolValue] == [itemValue boolValue]){
-                        index = i;
-                        break;
-                    }
-                } else if([attrsType isEqualToString:@"Number"]){
-                    NSNumber* itemValue = item[@"value"];
-                    NSNumber* v = (NSNumber*)value;
-                    if([v integerValue] == [itemValue integerValue]){
-                        index = i;
-                        break;
-                    }
-                } else{
-                   NSString* itemValue = item[@"value"];
-                   NSString* v = (NSString*)value;
-                   if([v isEqualToString:itemValue]){
-                        index = i;
-                        break;
-                   }
-               }
-            }
-            if(index > -1){
-                NSMutableDictionary* dic = [NSMutableDictionary dictionaryWithDictionary:option[index]];
-                [dic setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
-                return dic;
-            }
-        }
+-(void)setCurrentState:(NSString *)currentState{
+    _currentState = currentState;
+    if([self.delegate respondsToSelector:@selector(deviceControlStateChange:)]){
+           [self.delegate deviceControlStateChange:_currentState];
     }
-    return NULL;
+}
+
+-(void)setStateAsDevicenName{
+    self.currentState = self.device.name;
+}
+
+-(void)cancelSetState{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setStateAsDevicenName) object:nil];
+}
+
+-(NSString *)getStateName{
+    return self.currentState;
+}
+
+-(NSString*)getStringByKey:(NSString*)key{
+    NSString* languageKey = @"zh";
+    if(self.languageKey){
+        languageKey = self.languageKey;
+    }
+    NSDictionary* strings = self.language[languageKey];
+    if(strings){
+        return strings[key];
+    }
+    return key;
+}
+
+-(void)offlineTip
+{
+    if(self.device && self.device.is_online == NO){
+        [self cancelSetState];
+        self.currentState = @"离线";
+        [self performSelector:@selector(setStateAsDevicenName) withObject:nil afterDelay:2];
+    }
 }
 
 #pragma mark - GizDeviceWidgetDelegate
 -(void)deviceDataChange:(NSDictionary *)data{
-    if([self.delegate respondsToSelector:@selector(attrValueChange)]){
-        [self.delegate attrValueChange];
+    if(self.config && self.config.count > 0){
+        for (GizConfigItem* item in self.config) {
+            [item setDeviceData:data];
+        }
+    }
+    if([self.delegate respondsToSelector:@selector(deviceDataChange:)]){
+        [self.delegate deviceDataChange:data];
+    }
+}
+
+-(void)deviceOnlineStatusChange:(BOOL)is_online{
+    if([self.delegate respondsToSelector:@selector(deviceOnlineChange:)]){
+        [self.delegate deviceOnlineChange:is_online];
     }
 }
 

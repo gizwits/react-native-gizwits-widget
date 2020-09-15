@@ -16,20 +16,27 @@
 
 @implementation GizDevice
 
+
 +(GizDevice *)deviceByDictionary:(NSDictionary *)dic{
     GizDevice* device = [[GizDevice alloc]init];
     device.did = dic[@"did"];
-    device.is_online = dic[@"is_online"];
+    NSNumber* online = dic[@"is_online"];
+    device.is_online = [online boolValue];
     device.dev_alias = dic[@"dev_alias"];
     device.mac = dic[@"mac"];
     device.product_key = dic[@"product_key"];
     device.product_name = dic[@"product_name"];
     device.host = dic[@"host"];
-    device.deviceData = @{};
+    if(dic[@"deviceData"]){
+        device.deviceData = dic[@"deviceData"];
+    } else{
+        device.deviceData = @{};
+    }
     return device;
 }
 -(void)updateByDictionary:(NSDictionary *)dic{
-    self.is_online = dic[@"is_online"];
+    NSNumber* online = dic[@"is_online"];
+    self.is_online = [online boolValue];
     self.dev_alias = dic[@"dev_alias"];
     self.host = dic[@"host"];
 }
@@ -62,79 +69,37 @@
 //    }
 }
 
-//-(NSString *)currentControlIcon{
-//    if(self.is_online){
-//        NSDictionary* dic = [self getCurrentAttrs];
-//       NSString* image = dic[@"image"];
-//        if(image){
-//            return image;
-//        }
-//    }
-//    return self.icon;
-//}
+-(NSString *)name{
+    if(self.dev_alias && self.dev_alias.length > 0){
+        return self.dev_alias;
+    }
+    return self.product_name;
+}
 
-
-//-(NSDictionary *)getNextAttrs{
-//    NSArray* option = self.controlConfig[@"option"];
-//    NSString* attrsKey = self.controlConfig[@"attrs"];
-//    if(option && option.count > 0){
-//        NSDictionary* dic = [self getCurrentAttrs];
-//        NSUInteger index = 0;
-//        if(dic){
-//            NSNumber* indexNum = dic[@"index"];
-//            index = [indexNum integerValue];
-//            index = index +1;
-//            index = index%option.count;
-//        }
-//        NSDictionary* optionItem = option[index];
-//        return @{attrsKey:optionItem[@"value"]};
-//    }
-//    return NULL;
-//}
-//
-////根据当前数据点，获取设备处于哪个配置状态，没有则返回空
-//-(NSDictionary*)getCurrentAttrs{
-//    NSArray* option = self.controlConfig[@"option"];
-//    if(option && option.count > 0){
-//        NSString* attrsKey = self.controlConfig[@"attrs"];
-//        NSString* attrsType = self.controlConfig[@"type"];
-//        id value = [self.deviceData objectForKey:attrsKey];
-//        if(value){
-//            NSInteger index = -1;
-//            for (int i = 0; i<option.count; i++) {
-//                NSDictionary* item = option[i];
-//                if([attrsType isEqualToString:@"Boolean"]){
-//                    NSNumber* itemValue = item[@"value"];
-//                    NSNumber* v = (NSNumber*)value;
-//                    if([v boolValue] == [itemValue boolValue]){
-//                        index = i;
-//                        break;
-//                    }
-//                } else if([attrsType isEqualToString:@"Number"]){
-//                    NSNumber* itemValue = item[@"value"];
-//                    NSNumber* v = (NSNumber*)value;
-//                    if([v integerValue] == [itemValue integerValue]){
-//                        index = i;
-//                        break;
-//                    }
-//                } else{
-//                   NSString* itemValue = item[@"value"];
-//                   NSString* v = (NSString*)value;
-//                   if([v isEqualToString:itemValue]){
-//                        index = i;
-//                        break;
-//                   }
-//               }
-//            }
-//            if(index > -1){
-//                NSMutableDictionary* dic = [NSMutableDictionary dictionaryWithDictionary:option[index]];
-//                [dic setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
-//                return dic;
-//            }
-//        }
-//    }
-//    return NULL;
-//}
+-(NSDictionary *)deviceInfo{
+    NSMutableDictionary* info = [NSMutableDictionary new];
+    if(self.did){
+        [info setObject:self.did forKey:@"did"];
+    }
+    [info setObject:[NSNumber numberWithBool:self.is_online] forKey:@"is_online"];
+    if(self.dev_alias){
+        [info setObject:self.dev_alias forKey:@"dev_alias"];
+    }
+    if(self.mac){
+        [info setObject:self.mac forKey:@"mac"];
+    }
+    if(self.product_key){
+        [info setObject:self.product_key forKey:@"product_key"];
+    }
+    if(self.product_name){
+        [info setObject:self.product_name forKey:@"product_name"];
+    }
+    if(self.host){
+        [info setObject:self.product_name forKey:@"host"];
+    }
+    [info setObject:self.deviceData forKey:@"deviceData"];
+    return info;
+}
 
 
 #pragma mark - Setter
@@ -151,18 +116,20 @@
             }
         }
     }
-//    if([self.delegate respondsToSelector:@selector(deviceDataChange:)]){
-//        [self.delegate deviceDataChange:deviceData];
-//    }
 }
 
 -(void)setIs_online:(BOOL)is_online{
-    if(self.is_online != is_online){
+    if(_is_online != is_online){
         _is_online = is_online;
-        if([self.delegate respondsToSelector:@selector(deviceOnlineStatusChange:)]){
-            [self.delegate deviceOnlineStatusChange:is_online];
+        if(self.listenerList && self.listenerList.count){
+            for (id<GizDeviceWidgetDelegate> listeren in self.listenerList) {
+                if([listeren respondsToSelector:@selector(deviceOnlineStatusChange:)]){
+                     [listeren deviceOnlineStatusChange:is_online];
+                }
+            }
         }
     }
 }
+
 
 @end

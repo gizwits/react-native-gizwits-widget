@@ -9,6 +9,8 @@
 #import "RNGizWidgetManager.h"
 #import "GizWidgetAppManager.h"
 
+NSString * const resultError_Not_SetUp = @"Not Set Up";
+
 @interface RNGizWidgetManager ()
 
 @property (nonatomic, strong) GizWidgetAppManager* widgetmanager;
@@ -44,15 +46,87 @@ static id _instace;
     return _widgetmanager;
 }
 
-RCT_EXPORT_METHOD(getControlDeviceList:(RCTResponseSenderBlock)result) {
-    NSArray* list = [self.widgetmanager getDeviceControlDictionaryList];
-    result(@[list]);
+RCT_EXPORT_METHOD(setUpAppInfo:(NSDictionary*)info) {
+    [self.widgetmanager setUpAppInfo:info];
 }
 
-RCT_EXPORT_METHOD(saveControlDeviceList:(NSArray *)deviceList result:(RCTResponseSenderBlock)result) {
-    [self.widgetmanager saveDeviceControlList:deviceList];
-    result(@[@"success"]);
+RCT_EXPORT_METHOD(getControlDeviceList:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject) {
+    if([self.widgetmanager checkSetUp]){
+        NSArray* list = [self.widgetmanager getDeviceControlDictionaryList];
+        if(!list){
+            list = @[];
+        }
+        resolve(@{@"data":list});
+    } else{
+        resolve(@{@"error":resultError_Not_SetUp});
+    }
 }
+
+
+
+RCT_EXPORT_METHOD(saveControlDeviceList:(NSArray *)deviceList result:(RCTResponseSenderBlock)result) {
+    if([self.widgetmanager checkSetUp]){
+        [self.widgetmanager saveDeviceControlList:deviceList];
+        result(@[[NSNull null]]);
+   } else{
+        result(@[resultError_Not_SetUp]);
+   }
+}
+
+
+RCT_EXPORT_METHOD(getStateDeviceList:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject) {
+    if([self.widgetmanager checkSetUp]){
+        NSArray* list = [self.widgetmanager getDeviceStateDictionaryList];
+        if(!list){
+            list = @[];
+        }
+        resolve(@{@"data":list});
+    } else{
+        resolve(@{@"error":resultError_Not_SetUp});
+    }
+}
+
+
+RCT_EXPORT_METHOD(saveStateDeviceList:(NSArray *)deviceList result:(RCTResponseSenderBlock)result) {
+    if([self.widgetmanager checkSetUp]){
+        [self.widgetmanager saveDeviceStateList:deviceList];
+        result(@[[NSNull null]]);
+   } else{
+        result(@[resultError_Not_SetUp]);
+   }
+}
+
+RCT_EXPORT_METHOD(getSceneList:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject) {
+    if([self.widgetmanager checkSetUp]){
+        NSArray* list = [self.widgetmanager getSceneDictionaryList];
+        if(!list){
+            list = @[];
+        }
+        resolve(@{@"data":list});
+    } else{
+        resolve(@{@"error":resultError_Not_SetUp});
+    }
+}
+
+
+RCT_EXPORT_METHOD(saveSceneList:(NSArray *)deviceList result:(RCTResponseSenderBlock)result) {
+    if([self.widgetmanager checkSetUp]){
+        [self.widgetmanager saveSceneList:deviceList];
+        result(@[[NSNull null]]);
+   } else{
+        result(@[resultError_Not_SetUp]);
+   }
+}
+
+RCT_EXPORT_METHOD(clearAllData:(RCTResponseSenderBlock)result) {
+  [self.widgetmanager clearAllData];
+  result(@[[NSNull null]]);
+}
+
+
 
 
 @end

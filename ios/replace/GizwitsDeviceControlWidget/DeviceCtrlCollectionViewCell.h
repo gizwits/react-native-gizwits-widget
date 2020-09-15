@@ -13,7 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DeviceCtrlCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic, strong) UIColor* tintColor;
+
 -(void)setConfig:(GizControlConfig*)config;
+
+//-(void)setConfigItem:(GizConfigItem*)configItem;
 
 @end
 
