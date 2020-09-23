@@ -1,3 +1,5 @@
+type IError = 'Not Set Up';
+
 interface IInit {
   token: string; // 用户的token
   uid: string;// 用户的uid
@@ -82,10 +84,12 @@ interface ISceneResult {
 
 export function setUpAppInfo(params: IInit);
 export function getControlDeviceList(): IControlResult;
-export function saveControlDeviceList(list: IControlData[], callback: () => { });
+export function saveControlDeviceList(list: IControlData[], callback: (err: IError) => void);
 export function getStateDeviceList(): IStateResult;
-export function saveStateDeviceList(list: IStateData[], callback: () => {});
+export function saveStateDeviceList(list: IStateData[], callback: (err: IError) => void);
 
 
 export function getSceneList(): ISceneResult;
-export function clearAllData();
+export function saveSceneList(list: ISceneData[], callback: (err: IError) => void);
+
+export function clearAllData(callback: (err: IError) => void);
