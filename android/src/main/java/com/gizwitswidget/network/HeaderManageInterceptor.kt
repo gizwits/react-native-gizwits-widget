@@ -1,4 +1,4 @@
-package com.gizwits.xb.network
+package com.gizwitswidget.network
 
 import okhttp3.Interceptor
 import okhttp3.Request

@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.gizwits.xb.model.AppWidgetConfiguration
+import com.gizwitswidget.model.AppWidgetConfiguration
 import com.gizwitswidget.control.ControlWidgetController
 import com.gizwitswidget.scene.SceneWidgetController
 import com.gizwitswidget.state.StateWidgetController

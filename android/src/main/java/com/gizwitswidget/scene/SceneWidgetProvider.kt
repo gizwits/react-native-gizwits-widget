@@ -12,8 +12,8 @@ import com.gizwitswidget.R
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.gizwits.xb.model.AppWidgetConfiguration
-import com.gizwits.xb.model.SceneConfiguration
+import com.gizwitswidget.model.AppWidgetConfiguration
+import com.gizwitswidget.model.SceneConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

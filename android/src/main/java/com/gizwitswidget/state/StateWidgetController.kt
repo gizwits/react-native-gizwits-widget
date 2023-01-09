@@ -18,7 +18,7 @@ import com.gizwitswidget.model.StateConfiguration
 import com.gizwitswidget.model.StateContentFormatTitle
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.gizwits.xb.model.AppWidgetConfiguration
+import com.gizwitswidget.model.AppWidgetConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

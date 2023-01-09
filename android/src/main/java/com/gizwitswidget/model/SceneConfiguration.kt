@@ -1,4 +1,4 @@
-package com.gizwits.xb.model
+package com.gizwitswidget.model
 
 import com.google.gson.annotations.SerializedName
 

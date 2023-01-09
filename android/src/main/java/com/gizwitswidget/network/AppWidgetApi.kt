@@ -1,4 +1,4 @@
-package com.gizwits.xb.network
+package com.gizwitswidget.network
 
 import retrofit2.http.GET
 import retrofit2.http.POST

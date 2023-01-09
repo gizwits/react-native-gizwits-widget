@@ -1,4 +1,4 @@
-package com.gizwits.xb.network
+package com.gizwitswidget.network
 
 import com.google.gson.annotations.SerializedName
 

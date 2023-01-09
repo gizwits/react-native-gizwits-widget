@@ -23,10 +23,10 @@ import com.gizwitswidget.R
 import com.gizwitswidget.configurationStore
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.gizwits.xb.model.AppWidgetConfiguration
-import com.gizwits.xb.model.ControlConfig
-import com.gizwits.xb.model.ControlConfiguration
-import com.gizwits.xb.model.ControlOption
+import com.gizwitswidget.model.AppWidgetConfiguration
+import com.gizwitswidget.model.ControlConfig
+import com.gizwitswidget.model.ControlConfiguration
+import com.gizwitswidget.model.ControlOption
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,17 +40,17 @@ object ControlWidgetController {
     /**
      * 用于表示被控制设备的ID的键
      */
-    const val EXTRA_CONTROL_DEVICE_ID: String = "com.gizwits.xb.extra.CONTROL_DEVICE_ID"
+    const val EXTRA_CONTROL_DEVICE_ID: String = "com.gizwitswidget.extra.CONTROL_DEVICE_ID"
 
     /**
      * 用于表示控制ID的键
      */
-    const val EXTRA_CONTROL_ID: String = "com.gizwits.xb.extra.CONTROL_ID"
+    const val EXTRA_CONTROL_ID: String = "com.gizwitswidget.extra.CONTROL_ID"
 
     /**
      * 应用小组件执行控制的广播动作，需要额外附带[EXTRA_CONTROL_ID]数据
      */
-    const val ACTION_EXECUTE_CONTROL: String = "com.gizwits.xb.action.EXECUTE_CONTROL"
+    const val ACTION_EXECUTE_CONTROL: String = "com.gizwitswidget.action.EXECUTE_CONTROL"
 
     /**
      * 关联应用小组件控制器的协程作用域

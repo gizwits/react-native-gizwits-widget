@@ -10,7 +10,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.gizwits.xb.action.EXECUTE_SCENE" />
+                <action android:name="com.gizwitswidget.action.EXECUTE_SCENE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
@@ -27,7 +27,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.gizwits.xb.action.EXECUTE_CONTROL" />
+                <action android:name="com.gizwitswidget.action.EXECUTE_CONTROL" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

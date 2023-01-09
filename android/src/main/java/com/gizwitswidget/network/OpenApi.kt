@@ -1,6 +1,6 @@
 package com.gizwitswidget.network
 
-import com.gizwits.xb.network.UserDeviceList
+import com.gizwitswidget.network.UserDeviceList
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -14,11 +14,11 @@ import com.gizwitswidget.configurationStore
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.gizwits.xb.model.AppWidgetConfiguration
-import com.gizwits.xb.model.SceneConfiguration
-import com.gizwits.xb.network.AppWidgetApi
-import com.gizwits.xb.network.HeaderManageInterceptor
-import com.gizwits.xb.network.WidgetApiResponse
+import com.gizwitswidget.model.AppWidgetConfiguration
+import com.gizwitswidget.model.SceneConfiguration
+import com.gizwitswidget.network.AppWidgetApi
+import com.gizwitswidget.network.HeaderManageInterceptor
+import com.gizwitswidget.network.WidgetApiResponse
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -31,12 +31,12 @@ object SceneWidgetController {
     /**
      * 用于标识场景ID的键
      */
-    const val EXTRA_SCENE_ID: String = "com.gizwits.xb.extra.SCENE_ID"
+    const val EXTRA_SCENE_ID: String = "com.gizwitswidget.extra.SCENE_ID"
 
     /**
      * 应用小组件执行场景的广播动作，需要额外附带[EXTRA_SCENE_ID]数据
      */
-    const val ACTION_EXECUTE_SCENE: String = "com.gizwits.xb.action.EXECUTE_SCENE"
+    const val ACTION_EXECUTE_SCENE: String = "com.gizwitswidget.action.EXECUTE_SCENE"
 
     /**
      * 关联应用小组件控制器的协程作用域

@@ -6,9 +6,9 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
-import com.gizwits.xb.model.AppWidgetConfiguration
-import com.gizwits.xb.model.ControlConfiguration
-import com.gizwits.xb.network.HeaderManageInterceptor
+import com.gizwitswidget.model.AppWidgetConfiguration
+import com.gizwitswidget.model.ControlConfiguration
+import com.gizwitswidget.network.HeaderManageInterceptor
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
