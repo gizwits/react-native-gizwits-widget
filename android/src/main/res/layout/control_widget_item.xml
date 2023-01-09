@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:id="@+id/control_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/control_device_offline_icon"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="end|top"
+                    android:tint="@android:color/white"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="4dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_device_offline"/>
+
+                <ImageView
+                    android:id="@+id/control_device_icon"
+                    android:layout_width="59dp"
+                    android:layout_height="59dp"
+                    android:padding="16dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    tools:src="@drawable/ic_huijia"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/control_button_background"
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/control_button"
+                    android:layout_width="43dp"
+                    android:layout_height="43dp"
+                    android:padding="8dp"
+                    android:background="@drawable/control_button_mask_background"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    tools:src="@drawable/ic_huijia"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp">
+
+        <TextView
+            android:id="@+id/control_device_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/app_widget_content"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="机智风扇"/>
+
+        <TextView
+            android:id="@+id/control_action_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/app_widget_content"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="发短信"/>
+
+    </LinearLayout>
+
+</LinearLayout>

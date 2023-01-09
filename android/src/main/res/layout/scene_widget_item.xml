@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/scene_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/scene_widget_item_background"
+            android:padding="16dp"
+            android:contentDescription="@null"
+            tools:src="@drawable/ic_huijia"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/scene_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/app_widget_content"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="发短信"/>
+
+</LinearLayout>

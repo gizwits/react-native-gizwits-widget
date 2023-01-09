@@ -2,5 +2,59 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.gizwitswidget">
 
+    <application>
+
+        <receiver
+            android:name="com.gizwitswidget.scene.SceneWidgetProvider"
+            android:label="@string/scene_widget_description"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.gizwits.xb.action.EXECUTE_SCENE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/scene_widget_provider_info" />
+        </receiver>
+
+        <service
+            android:name="com.gizwitswidget.scene.SceneWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver
+            android:name="com.gizwitswidget.control.ControlWidgetProvider"
+            android:label="@string/control_widget_description"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.gizwits.xb.action.EXECUTE_CONTROL" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/control_widget_provider_info" />
+        </receiver>
+
+        <service
+            android:name="com.gizwitswidget.control.ControlWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver
+            android:name="com.gizwitswidget.state.StateWidgetProvider"
+            android:label="@string/state_widget_description"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/state_widget_provider_info" />
+        </receiver>
+
+        <service
+            android:name="com.gizwitswidget.state.StateWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+    </application>
+
 </manifest>
   

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="75dp"
+    android:layout_height="100dp"
+    android:padding="8dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/state_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/app_widget_content"
+        android:textSize="13sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        tools:text="Innen PM2.5 μg/m³"/>
+
+    <FrameLayout
+        android:id="@+id/state_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/state_text_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/app_widget_content"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/state_image_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:visibility="invisible"
+            android:contentDescription="@null"
+            tools:src="@drawable/ic_huijia"/>
+
+        <ProgressBar
+            android:id="@+id/state_empty_content"
+            android:padding="8dp"
+            android:indeterminateTint="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/state_device_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/app_widget_content"
+        android:textSize="13sp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        tools:text="机智温度计"/>
+
+</LinearLayout>

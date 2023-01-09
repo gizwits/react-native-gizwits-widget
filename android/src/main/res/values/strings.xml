@@ -1,0 +1,16 @@
+<resources>
+    <string name="to_add">去添加</string>
+    <string name="offline">离线</string>
+
+    <string name="scene_widget_description">智家手动场景</string>
+    <string name="hint_scene_list_is_empty">未添加手动场景，请先添加</string>
+    <string name="hint_in_execution">执行中</string>
+    <string name="hint_execution_failure">执行失败</string>
+    <string name="hint_execution_success">执行成功</string>
+
+    <string name="control_widget_description">智家快捷控制</string>
+    <string name="hint_control_list_is_empty">未添加智能设备，请先添加</string>
+
+    <string name="state_widget_description">智家设备状态</string>
+    <string name="hint_state_list_is_empty">未添加智能设备，请先添加</string>
+</resources>

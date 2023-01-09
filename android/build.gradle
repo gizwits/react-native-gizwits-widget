@@ -1,23 +1,28 @@
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
+        maven {
+            url 'https://maven.aliyun.com/repository/google/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/jcenter/'
+        }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.1'
+        classpath 'com.android.tools.build:gradle:4.2.1'
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 31
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 21
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
     }
@@ -28,9 +33,25 @@ android {
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://maven.aliyun.com/repository/google/'
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/jcenter/'
+    }
 }
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    // gson
+    implementation "com.google.code.gson:gson:2.9.1"
+    // dataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 }
   
