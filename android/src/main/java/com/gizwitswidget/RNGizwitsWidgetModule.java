@@ -22,6 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
         super(reactContext);
         this.reactContext = reactContext;
         // 初始化小组件控制器
-        AppWidgetController.INSTANCE.registerController(reactContext);
+        AppWidgetController.INSTANCE.tryRegisterController(reactContext);
     }
 
     @Override
@@ -160,7 +162,20 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void clearAllData(Callback callback) {
-
+        // 清空小组件通用的配置信息
+        AppWidgetController.INSTANCE.deregisterWidgetConfiguration();
+        // 清空场景小组件的配置信息
+        String sceneConfiguration = gsonParser.toJson(Collections.emptyList());
+        AppWidgetController.INSTANCE.registerSceneConfiguration(sceneConfiguration);
+        // 清空控制小组件的配置信息
+        String controlConfiguration = gsonParser.toJson(Collections.emptyList());
+        AppWidgetController.INSTANCE.registerControlConfiguration(controlConfiguration);
+        // 清空状态小组件的配置信息
+        String stateConfiguration = gsonParser.toJson(Collections.emptyList());
+        AppWidgetController.INSTANCE.registerStateConfiguration(stateConfiguration);
+        // 返回成功
+        String successJson = createJsonResponse("", "");
+        callback.invoke(successJson);
     }
 
     private String createJsonResponse(String data, String error) {

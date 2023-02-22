@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import com.gizwitswidget.AppWidgetController
 import com.gizwitswidget.R
 
 class ControlWidgetProvider : AppWidgetProvider() {
@@ -14,11 +15,16 @@ class ControlWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        // 更新应用控制小组件
         updateControlWidgetView(context)
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        // 接收到小组件相关广播时，尝试注册小组件控制器，避免之前应用已被杀死
+        AppWidgetController.tryRegisterController(context)
+
         super.onReceive(context, intent)
+        // 检索并执行控制小组件的动作点击执行事件
         when (intent.action) {
             ControlWidgetController.ACTION_EXECUTE_CONTROL -> {
                 val deviceId: String = intent.getStringExtra(ControlWidgetController.EXTRA_CONTROL_DEVICE_ID) ?: return

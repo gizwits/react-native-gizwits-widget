@@ -10,10 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a72e2795-d475-4567-b90e-09701584c1c2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/AppWidgetController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/AppWidgetController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/AppWidgetService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/AppWidgetService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/RNGizwitsWidgetModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/RNGizwitsWidgetModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/control/ControlWidgetProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/control/ControlWidgetProvider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/network/WidgetApiResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/network/WidgetApiResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetProvider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetProvider.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,16 +66,13 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
-    <property name="cidr.known.project.marker" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/gizwitswidget" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="http.proxy" />
-    <property name="show.do.not.copy.http.proxy.settings.to.gradle" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/Users/qimi/ProgramProject/Workspace/react-native-gizwits-widget/android"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -99,6 +101,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RemoteViews
@@ -238,7 +239,7 @@ class StateWidgetItem(
             var formatTitleToShow: StateContentFormatTitle? = null
             if (isOnline) {
                 run {
-                    // 如果设备在线，则根据条件匹配决定显示的内容，如果当前状态值为空，则忽略
+                    // 如果设备在线，则根据条件匹配决定显示的内容，如果当前状态值为空，则忽略（显示等待进度条）
                     val currentValue: JsonElement = attrsValue ?: return@run
                     // 根据条件匹配是否显示指定内容
                     if (configuration.contentList.isEmpty()) {
@@ -273,7 +274,10 @@ class StateWidgetItem(
                             return@run
                         } else if (stateContent.text != null) {
                             isShowTextContent = true
-                            textContentToShow = stateContent.text
+                            textContentToShow = configuration.language
+                                .getAsJsonObject(appWidgetConfiguration.languageKey)
+                                ?.get(stateContent.text)
+                                ?.asString ?: "null"
                             return@run
                         }
                     }
@@ -291,7 +295,7 @@ class StateWidgetItem(
                 isShowTextContent = true
                 textContentToShow = context.getString(R.string.offline)
             }
-            // 设置中心区域内容的可见性
+            // 设置中心区域内容的可见性，决定显示的内容：文本、图片、进度条
             setViewVisibility(
                 R.id.state_text_content,
                 if (isShowTextContent) View.VISIBLE else View.INVISIBLE
@@ -304,7 +308,7 @@ class StateWidgetItem(
                 R.id.state_empty_content,
                 if (!isShowTextContent && !isShowImageContent) View.VISIBLE else View.INVISIBLE
             )
-            // 设置中心区域显示的内容颜色
+            // 设置中心区域显示的内容颜色，决定中心区域显示内容的颜色
             setTextColor(
                 R.id.state_text_content,
                 if (isOnline) {
@@ -313,7 +317,7 @@ class StateWidgetItem(
                     Color.parseColor("#7FFFFFFF")
                 }
             )
-            // 设置中心区域显示的内容
+            // 设置中心区域显示的内容，显示图片或者文本
             if (isShowImageContent) {
                 // 中心区域显示内容为图片
                 try {
@@ -390,25 +394,9 @@ private operator fun JsonElement.compareTo(another: JsonElement): Int {
         // 不是数值类型，无法比较
         throw RuntimeException("Unsupported type")
     }
-    val firstValue: Number = firstPrimitive.asNumber
-    val secondValue: Number = secondPrimitive.asNumber
-    return when (firstValue) {
-        is Float, is Double -> {
-            when (secondValue) {
-                is Float, is Double -> firstValue.toDouble().compareTo(secondValue.toDouble())
-                is Int, is Long -> firstValue.toLong().compareTo(secondValue.toLong())
-                else -> throw java.lang.Exception()
-            }
-        }
-        is Int, is Long -> {
-            when (secondValue) {
-                is Float, is Double -> firstValue.toDouble().compareTo(secondValue.toDouble())
-                is Int, is Long -> firstValue.toLong().compareTo(secondValue.toLong())
-                else -> throw java.lang.Exception()
-            }
-        }
-        else -> throw java.lang.Exception()
-    }
+    val firstValue: Double = firstPrimitive.asDouble
+    val secondValue: Double = secondPrimitive.asDouble
+    return firstValue.compareTo(secondValue)
 }
 
 

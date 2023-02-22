@@ -1,6 +1,7 @@
 package com.gizwitswidget.scene
 
 import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -11,20 +12,21 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.gizwitswidget.R
 import com.gizwitswidget.configurationStore
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import com.gizwitswidget.model.AppWidgetConfiguration
 import com.gizwitswidget.model.SceneConfiguration
 import com.gizwitswidget.network.AppWidgetApi
 import com.gizwitswidget.network.HeaderManageInterceptor
 import com.gizwitswidget.network.WidgetApiResponse
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 object SceneWidgetController {
 
@@ -225,11 +227,16 @@ class SceneWidgetItem(
              // 设置场景背景
              setInt(R.id.scene_button, "setBackgroundResource", backgroundResId)
              // 设置场景图标
+             val iconName: String = if (configuration.iconName.isNotEmpty()) {
+                 "ic_${configuration.iconName}"
+             } else {
+                 "ic_huijia"
+             }
              setInt(
                  R.id.scene_button,
                  "setImageResource",
                  context.resources.getIdentifier(
-                     "ic_${configuration.iconName}",
+                     iconName,
                      "drawable",
                      context.packageName
                  )

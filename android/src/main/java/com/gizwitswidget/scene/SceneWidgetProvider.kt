@@ -6,18 +6,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
+import com.gizwitswidget.AppWidgetController
 import com.gizwitswidget.R
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import com.gizwitswidget.model.AppWidgetConfiguration
-import com.gizwitswidget.model.SceneConfiguration
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class SceneWidgetProvider : AppWidgetProvider() {
 
@@ -26,11 +16,16 @@ class SceneWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        // 更新应用场景小组件
         updateSceneWidgetView(context)
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        // 接收到小组件相关广播时，尝试注册小组件控制器，避免之前应用已被杀死
+        AppWidgetController.tryRegisterController(context)
+
         super.onReceive(context, intent)
+        // 检索并执行场景小组件的场景点击执行事件
         when (intent.action) {
             SceneWidgetController.ACTION_EXECUTE_SCENE -> {
                 val sceneId: Int = intent.getIntExtra(SceneWidgetController.EXTRA_SCENE_ID, 0)
