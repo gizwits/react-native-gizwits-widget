@@ -10,95 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a72e2795-d475-4567-b90e-09701584c1c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/AppWidgetController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/AppWidgetService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/control/ControlWidgetController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/control/ControlWidgetListFactory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/control/ControlWidgetProvider.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/control/ControlWidgetService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/model/AppWidgetConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/model/ControlConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/model/SceneConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/model/StateConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/model/WidgetResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/network/AppWidgetApi.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/network/HeaderManageInterceptor.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/network/OpenApi.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/network/WidgetApiResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetListFactory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetProvider.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/scene/SceneWidgetService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetListFactory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetProvider.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/state/StateWidgetService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-mdpi/widget_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-night/widget_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-night/widget_title_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-xhdpi/widget_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-xxhdpi/widget_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-xxxhdpi/widget_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/control_button_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/control_button_mask_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/control_widget_item_active_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/control_widget_item_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_changge.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_daqiu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_device_offline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_huahua.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_huazhuang.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_huijia.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_jianshen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_jieri.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_jiuhui.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_kandianshi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_kandianying.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_lijia.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_naozhong.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_paizhao.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_richu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_riluo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_shangban.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_shengriparty.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_shuijue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_tingyinle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_tixing.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_wanju.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_wanleqi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_wanshouji.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_wanyouxi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_weinai.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_xiezuo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_xizao.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_yongcan.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_yongdiannao.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_yuedu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_yuehui.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_zhuguang.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_zuofan.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/scene_widget_item_active_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/scene_widget_item_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/widget_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/widget_empty_button_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/widget_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/widget_title_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/control_widget_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/control_widget_layout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/scene_widget_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/scene_widget_layout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/state_widget_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/state_widget_layout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/values-night/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/xml/control_widget_provider_info.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/xml/scene_widget_provider_info.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/xml/state_widget_provider_info.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/RNGizwitsWidgetModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/RNGizwitsWidgetModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/RNGizwitsWidgetPackage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gizwitswidget/RNGizwitsWidgetPackage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,6 +69,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/gizwitswidget" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="http.proxy" />
+    <property name="show.do.not.copy.http.proxy.settings.to.gradle" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -182,5 +98,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
