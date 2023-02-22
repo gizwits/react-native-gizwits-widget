@@ -29,28 +29,22 @@ class ControlConfiguration {
 
 }
 
-
-class ControlConfig {
-
+data class ControlConfig(
     @SerializedName("id")
-    lateinit var id: String
-
+    val id: String,
     @SerializedName("editName")
-    lateinit var nameId: String
-
+    val nameId: String,
     @SerializedName("attrsIcon")
-    lateinit var attrsIcon: String
-
+    val attrsIcon: String,
+    @SerializedName("sort")
+    val sort: Int,
     @SerializedName("type")
-    lateinit var type: String
-
+    val type: String,
     @SerializedName("attrs")
-    lateinit var attrsKey: String
-
+    val attrsKey: String,
     @SerializedName("option")
     val options: List<ControlOption> = emptyList()
-
-}
+)
 
 class ControlOption {
 
