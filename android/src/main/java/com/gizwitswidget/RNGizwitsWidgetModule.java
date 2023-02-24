@@ -38,8 +38,8 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
     public RNGizwitsWidgetModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        // 初始化小组件控制器
-        AppWidgetController.INSTANCE.tryRegisterController(reactContext);
+        // 激活小组件
+        AppWidgetController.INSTANCE.activateAppWidget(reactContext);
     }
 
     @Override
@@ -61,13 +61,14 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
             Log.e(TAG, e.getMessage());
         }
         Log.d(TAG, jsonObject.toString());
-        AppWidgetController.INSTANCE.registerWidgetConfiguration(jsonObject.toString());
+
+        AppWidgetController.INSTANCE.setCommonWidgetConfiguration(reactContext, jsonObject.toString());
     }
 
     @ReactMethod
     public void saveSceneList(ReadableArray data, Callback callback) {
         String sceneConfiguration = gsonParser.toJson(data.toArrayList());
-        AppWidgetController.INSTANCE.registerSceneConfiguration(sceneConfiguration);
+        AppWidgetController.INSTANCE.setSceneWidgetConfiguration(reactContext, sceneConfiguration);
 
         String successJson = createJsonResponse("", "");
         callback.invoke(successJson);
@@ -75,7 +76,7 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getSceneList(Promise promise) {
-        AppWidgetController.INSTANCE.getSceneConfiguration(reactContext, configuration -> {
+        AppWidgetController.INSTANCE.getSceneWidgetConfiguration(reactContext, configuration -> {
             try {
                 JSONObject configurationJson = new JSONObject();
                 if (!configuration.isEmpty()) {
@@ -99,7 +100,8 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void saveControlDeviceList(ReadableArray data, Callback callback) {
         String controlConfiguration = gsonParser.toJson(data.toArrayList());
-        AppWidgetController.INSTANCE.registerControlConfiguration(controlConfiguration);
+        AppWidgetController.INSTANCE
+                .setControlWidgetConfiguration(reactContext, controlConfiguration);
 
         String successJson = createJsonResponse("", "");
         callback.invoke(successJson);
@@ -107,7 +109,7 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getControlDeviceList(Promise promise) {
-        AppWidgetController.INSTANCE.getControlConfiguration(reactContext, configuration -> {
+        AppWidgetController.INSTANCE.getControlWidgetConfiguration(reactContext, configuration -> {
             try {
                 JSONObject configurationJson = new JSONObject();
                 if (!configuration.isEmpty()) {
@@ -131,7 +133,7 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void saveStateDeviceList(ReadableArray data, Callback callback) {
         String stateConfiguration = gsonParser.toJson(data.toArrayList());
-        AppWidgetController.INSTANCE.registerStateConfiguration(stateConfiguration);
+        AppWidgetController.INSTANCE.setStateWidgetConfiguration(reactContext, stateConfiguration);
 
         String successJson = createJsonResponse("", "");
         callback.invoke(successJson);
@@ -139,7 +141,7 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getStateDeviceList(Promise promise) {
-        AppWidgetController.INSTANCE.getStateConfiguration(reactContext, configuration -> {
+        AppWidgetController.INSTANCE.getStateWidgetConfiguration(reactContext, configuration -> {
             try {
                 JSONObject configurationJson = new JSONObject();
                 if (!configuration.isEmpty()) {
@@ -162,17 +164,8 @@ public class RNGizwitsWidgetModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void clearAllData(Callback callback) {
-        // 清空小组件通用的配置信息
-        AppWidgetController.INSTANCE.deregisterWidgetConfiguration();
-        // 清空场景小组件的配置信息
-        String sceneConfiguration = gsonParser.toJson(Collections.emptyList());
-        AppWidgetController.INSTANCE.registerSceneConfiguration(sceneConfiguration);
-        // 清空控制小组件的配置信息
-        String controlConfiguration = gsonParser.toJson(Collections.emptyList());
-        AppWidgetController.INSTANCE.registerControlConfiguration(controlConfiguration);
-        // 清空状态小组件的配置信息
-        String stateConfiguration = gsonParser.toJson(Collections.emptyList());
-        AppWidgetController.INSTANCE.registerStateConfiguration(stateConfiguration);
+        // 清空小组件的配置信息
+        AppWidgetController.INSTANCE.clearWidgetConfiguration(reactContext);
         // 返回成功
         String successJson = createJsonResponse("", "");
         callback.invoke(successJson);
