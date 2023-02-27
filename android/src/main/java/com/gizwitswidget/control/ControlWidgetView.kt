@@ -58,7 +58,7 @@ object ControlWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当前控制小组件的视图模型对象
      */
-    private lateinit var viewModel: ControlWidgetViewModel
+    private var viewModel: ControlWidgetViewModel? = null
 
     /**
      * 控制小组件列表项状态列表
@@ -87,7 +87,7 @@ object ControlWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当控制小组件被首次添加时，回调此方法，激活小组件相关服务
      */
-    fun onEnabled() = viewModel.setEnabled(true)
+    fun onEnabled() = viewModel?.setEnabled(true)
 
     /**
      * 当前小组件的视图需要被创建、更新时回调此方法，此方法返回由最新小组件数据构建的视图
@@ -142,10 +142,10 @@ object ControlWidgetView : WidgetRemoteViewsFactory() {
      * @param isSandBox 被控设备的发布状态
      */
     fun onClickControlButton(deviceId: String, controlId: Int, isSandBox: Boolean?) =
-        viewModel.executeControl(deviceId, controlId, isSandBox)
+        viewModel?.executeControl(deviceId, controlId, isSandBox)
 
     override fun onDataSetChanged() {
-        val controlWidgetUiState: ControlWidgetUiState = viewModel.controlWidgetUiState
+        val controlWidgetUiState: ControlWidgetUiState = viewModel?.controlWidgetUiState ?: ControlWidgetUiState.Idle
         controlWidgetItemStateList = when (controlWidgetUiState) {
             is ControlWidgetUiState.Idle -> listOf()
             is ControlWidgetUiState.Success -> controlWidgetUiState.itemStateList
@@ -305,7 +305,7 @@ object ControlWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当控制小组件被完全移除之后，回调此方法，释放小组件相关服务
      */
-    fun onDisabled() = viewModel.setEnabled(false)
+    fun onDisabled() = viewModel?.setEnabled(false)
 
     private fun Drawable.toBitmap(
         @Px width: Int = intrinsicWidth,

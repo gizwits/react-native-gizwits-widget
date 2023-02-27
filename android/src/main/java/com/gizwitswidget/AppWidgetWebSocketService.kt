@@ -76,8 +76,12 @@ object AppWidgetWebSocketService {
     /**
      * 连接小组件的WebSocket服务
      * @param context 上下文对象
+     * @param commonConfiguration 应用小组件全局通用配置
      */
-    suspend fun connect(context: Context) = connectMutex.withLock {
+    suspend fun connect(
+        context: Context,
+        commonConfiguration: AppWidgetConfiguration
+    ) = connectMutex.withLock {
         // 客户端的连接数加1
         connectionCount += 1
         if (isServiceConnected) {
@@ -85,10 +89,6 @@ object AppWidgetWebSocketService {
             return@withLock
         }
         // 开始连接小组件的WebSocket服务
-        val commonConfigurationStr: String = widgetConfigurationRepository
-            .getCommonWidgetConfiguration(context).first() ?: return@withLock
-        val commonConfiguration: AppWidgetConfiguration = configurationParser
-            .fromJson(commonConfigurationStr, AppWidgetConfiguration::class.java)
         publishedWebSocketService.connect(commonConfiguration)
         unpublishedWebSocketService.connect(commonConfiguration)
         isServiceConnected = true

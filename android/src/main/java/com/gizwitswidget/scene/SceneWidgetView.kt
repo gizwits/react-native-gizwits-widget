@@ -38,7 +38,7 @@ object SceneWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当前场景小组件的视图模型对象
      */
-    private lateinit var viewModel: SceneWidgetViewModel
+    private var viewModel: SceneWidgetViewModel? = null
 
     /**
      * 场景小组件列表项状态列表
@@ -67,7 +67,7 @@ object SceneWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当场景小组件被首次添加时，回调此方法，激活小组件相关服务
      */
-    fun onEnabled() = viewModel.setEnabled(true)
+    fun onEnabled() = viewModel?.setEnabled(true)
 
     /**
      * 当前小组件的视图需要被创建、更新时回调此方法，此方法返回由最新小组件数据构建的视图
@@ -120,10 +120,10 @@ object SceneWidgetView : WidgetRemoteViewsFactory() {
      * @param homeId 家id
      * @param sceneId 场景id
      */
-    fun onClickSceneButton(homeId: Int, sceneId: Int) = viewModel.executeScene(homeId, sceneId)
+    fun onClickSceneButton(homeId: Int, sceneId: Int) = viewModel?.executeScene(homeId, sceneId)
 
     override fun onDataSetChanged() {
-        val sceneWidgetUiState: SceneWidgetUiState = viewModel.sceneWidgetUiState
+        val sceneWidgetUiState: SceneWidgetUiState = viewModel?.sceneWidgetUiState ?: SceneWidgetUiState.Idle
         sceneWidgetItemStateList = when (sceneWidgetUiState) {
             is SceneWidgetUiState.Idle -> listOf()
             is SceneWidgetUiState.Success -> sceneWidgetUiState.itemStateList
@@ -179,7 +179,7 @@ object SceneWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当场景小组件被完全移除之后，回调此方法，释放小组件相关服务
      */
-    fun onDisabled() = viewModel.setEnabled(false)
+    fun onDisabled() = viewModel?.setEnabled(false)
 
 }
 

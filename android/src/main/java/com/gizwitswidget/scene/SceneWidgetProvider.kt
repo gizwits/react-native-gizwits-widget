@@ -34,7 +34,9 @@ class SceneWidgetProvider : AppWidgetProvider() {
      * 当场景小组件被首次添加时，回调此方法，激活小组件相关服务
      * @param context 上下文对象
      */
-    override fun onEnabled(context: Context?) = SceneWidgetView.onEnabled()
+    override fun onEnabled(context: Context?) {
+        SceneWidgetView.onEnabled()
+    }
 
     /**
      * 当场景小组件被通知更新时，回调此方法，更新小组件的视图内容
@@ -55,7 +57,9 @@ class SceneWidgetProvider : AppWidgetProvider() {
      * 当场景小组件被完全移除之后，回调此方法，释放小组件相关服务
      * @param context 上下文对象
      */
-    override fun onDisabled(context: Context) = SceneWidgetView.onDisabled()
+    override fun onDisabled(context: Context) {
+        SceneWidgetView.onDisabled()
+    }
 
     companion object {
 

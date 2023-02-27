@@ -120,8 +120,15 @@ class ControlWidgetViewModel(application: Application) : WidgetViewModel(applica
             // 初始化已订阅设备信息列表
             val subscribedDeviceInfoList: MutableList<SubscribedDeviceInfo> = mutableListOf()
             send(subscribedDeviceInfoList.toList())
+            // 等待获取应用小组件的全局配置文件
+            val commonConfigurationStr: String = widgetConfigurationRepository
+                .getCommonWidgetConfiguration(application)
+                .mapNotNull { it }
+                .first()
+            val commonConfiguration: AppWidgetConfiguration = configurationParser
+                .fromJson(commonConfigurationStr, AppWidgetConfiguration::class.java)
             // 开始连接WebSocket服务
-            AppWidgetWebSocketService.connect(application)
+            AppWidgetWebSocketService.connect(application, commonConfiguration)
             // 监听设备连接以及状态信息
             val connectionStateListener: (String, Boolean) -> Unit = {
                 deviceId, isConnectd ->

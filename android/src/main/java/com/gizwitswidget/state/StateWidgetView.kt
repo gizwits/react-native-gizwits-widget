@@ -28,7 +28,7 @@ object StateWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当前场景小组件的视图模型对象
      */
-    private lateinit var viewModel: StateWidgetViewModel
+    private var viewModel: StateWidgetViewModel? = null
 
     /**
      * 状态小组件列表项状态列表
@@ -57,7 +57,7 @@ object StateWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当状态小组件被首次添加时，回调此方法，激活小组件相关服务
      */
-    fun onEnabled() = viewModel.setEnabled(true)
+    fun onEnabled() = viewModel?.setEnabled(true)
 
     /**
      * 当前小组件的视图需要被创建、更新时回调此方法，此方法返回由最新小组件数据构建的视图
@@ -90,7 +90,7 @@ object StateWidgetView : WidgetRemoteViewsFactory() {
     }
 
     override fun onDataSetChanged() {
-        val stateWidgetUiState: StateWidgetUiState = viewModel.stateWidgetUiState
+        val stateWidgetUiState: StateWidgetUiState = viewModel?.stateWidgetUiState ?: StateWidgetUiState.Idle
         stateWidgetItemStateList = when (stateWidgetUiState) {
             is StateWidgetUiState.Idle -> listOf()
             is StateWidgetUiState.Success -> stateWidgetUiState.itemStateList
@@ -258,7 +258,7 @@ object StateWidgetView : WidgetRemoteViewsFactory() {
     /**
      * 当小组件被完全移除之后，回调此方法，释放小组件相关服务
      */
-    fun onDisabled() = viewModel.setEnabled(false)
+    fun onDisabled() = viewModel?.setEnabled(false)
 
 }
 
