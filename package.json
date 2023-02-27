@@ -1,6 +1,6 @@
 {
   "name": "react-native-gizwits-widget",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "兼容70RN",
   "main": "index.js",
   "scripts": {
