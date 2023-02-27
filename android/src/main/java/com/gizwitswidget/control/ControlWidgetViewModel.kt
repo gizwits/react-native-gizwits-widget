@@ -211,14 +211,23 @@ class ControlWidgetViewModel(application: Application) : WidgetViewModel(applica
                             .find { it.deviceId == deviceInfo.deviceId }
                         // 获取设备的发布状态信息
                         val isSandbox: Boolean? = boundDeviceInfo?.isSandbox
-                        val isOnline: Boolean = subscribedDeviceInfo?.isOnline ?: false
+                        val isOnline: Boolean = if (isSandbox != null && subscribedDeviceInfo != null) {
+                            subscribedDeviceInfo.isOnline ?: false
+                        } else {
+                            false
+                        }
 
                         // 迭代控制组件的属性配置项，构建列表项的Ui状态
-                        deviceInfo.configs.forEach { config ->
+                        deviceInfo.configs.forEach configsLoop@{ config ->
                             val controlledDeviceInfo: ControlledDeviceInfo? = _controlledDeviceInfos
                                 .find { it.deviceId == deviceInfo.deviceId && it.controlId.toString() == config.id}
 
-                            val deviceName: String = controlledDeviceInfo?.deviceName ?: deviceInfo.name ?: boundDeviceInfo?.deviceName ?: "null"
+                            val deviceName: String? = controlledDeviceInfo?.deviceName ?: deviceInfo.name ?: boundDeviceInfo?.deviceName
+                            if (deviceName == null) {
+                                // 如果设备名称为空，则不添加至设备列表
+                                return@configsLoop
+                            }
+
                             val attrsValue: JsonElement? = controlledDeviceInfo?.attrsValue
                                 ?: subscribedDeviceInfo?.attributes?.getAsJsonPrimitive(config.attrsKey)
                             itemStateList.add(
@@ -252,9 +261,11 @@ class ControlWidgetViewModel(application: Application) : WidgetViewModel(applica
                 // 当前桌面无小组件，关闭小组件服务
                 emit(ControlWidgetUiState.Idle)
             }
-        }.onEach {
-            // 通知小组件以及小组件列表更新视图
+        }.onStart {
+            // 通知小组件更新视图
             ControlWidgetProvider.updateAppWidget(application)
+        }.onEach {
+            // 通知小组件列表更新视图
             ControlWidgetProvider.notifyAppWidgetViewDataChanged(application)
         }.stateIn(
             scope = viewModelScope,

@@ -55,7 +55,7 @@ class WidgetApiRepositoryImpl constructor(
 
     override suspend fun fetchUserDeviceList(): Result<UserDeviceList> {
         return runCatching {
-            openApi.fetchUserDeviceList()
+            openApi.fetchUserDeviceList(9999)
         }.onFailure { cancellationException ->
             if (cancellationException is CancellationException) {
                 throw cancellationException

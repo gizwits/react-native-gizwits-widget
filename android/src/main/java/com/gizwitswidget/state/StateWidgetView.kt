@@ -13,9 +13,6 @@ import com.bumptech.glide.Glide
 import com.gizwitswidget.R
 import com.gizwitswidget.WidgetRemoteViewsFactory
 import com.gizwitswidget.model.StateContentFormatTitle
-import com.gizwitswidget.scene.SceneWidgetService
-import com.gizwitswidget.scene.SceneWidgetView
-import com.gizwitswidget.scene.SceneWidgetViewModel
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import java.text.SimpleDateFormat
@@ -111,11 +108,7 @@ object StateWidgetView : WidgetRemoteViewsFactory() {
         val itemState: StateWidgetItemState = stateWidgetItemStateList[position]
         return RemoteViews(application.packageName, R.layout.state_widget_item).apply {
             // 设置状态组件名称
-            val deviceName: String = itemState.language
-                .getAsJsonObject(itemState.languageKey)
-                ?.get(itemState.nameId)
-                ?.asString ?: ""
-            setTextViewText(R.id.state_device_name, deviceName)
+            setTextViewText(R.id.state_device_name, itemState.deviceName)
             // 设置状态组件名称的字体颜色
             setTextColor(
                 R.id.state_device_name,

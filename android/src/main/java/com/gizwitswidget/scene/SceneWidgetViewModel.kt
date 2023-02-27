@@ -104,8 +104,9 @@ class SceneWidgetViewModel(application: Application) : WidgetViewModel(applicati
                 // 当前桌面无小组件，关闭小组件服务
                 emit(SceneWidgetUiState.Idle)
             }
-        }.onEach{
+        }.onStart {
             SceneWidgetProvider.updateAppWidget(application)
+        }.onEach{
             SceneWidgetProvider.notifyAppWidgetViewDataChanged(application)
         }.stateIn(
             scope = viewModelScope,

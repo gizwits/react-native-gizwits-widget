@@ -3,22 +3,23 @@ package com.gizwitswidget.state
 import android.app.Application
 import com.gizwitswidget.AppWidgetWebSocketService
 import com.gizwitswidget.WidgetViewModel
-import com.gizwitswidget.control.ControlWidgetUiState
+import com.gizwitswidget.core.data.repository.WidgetApiRepository
+import com.gizwitswidget.core.data.repository.WidgetApiRepositoryImpl
 import com.gizwitswidget.core.data.repository.WidgetConfigurationRepository
 import com.gizwitswidget.core.data.repository.WidgetConfigurationRepositoryImpl
 import com.gizwitswidget.model.AppWidgetConfiguration
 import com.gizwitswidget.model.StateConfiguration
 import com.gizwitswidget.model.StateContent
 import com.gizwitswidget.model.StateTitle
+import com.gizwitswidget.network.UserDeviceList
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class StateWidgetViewModel(application: Application) : WidgetViewModel(application) {
 
@@ -71,6 +72,44 @@ class StateWidgetViewModel(application: Application) : WidgetViewModel(applicati
                     listOf()
                 }
             }
+
+    /**
+     * 状态小组件设备的绑定信息
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val boundDeviceInfos: Flow<List<BoundDeviceInfo>> =
+        commonConfiguration.transformLatest { commonConfig ->
+            emit(listOf<BoundDeviceInfo>())
+            if (commonConfig == null) {
+                // 通用的小组件配置信息为空，直接退出
+                return@transformLatest
+            }
+            val widgetApiRepository: WidgetApiRepository = WidgetApiRepositoryImpl(
+                openUrl = commonConfig.openUrl,
+                aepUrl = commonConfig.aepUrl,
+                appId = commonConfig.appId,
+                userToken = commonConfig.userToken
+            )
+            while (currentCoroutineContext().isActive) {
+                val result: Result<UserDeviceList> = widgetApiRepository.fetchUserDeviceList()
+                if (result.isFailure || !result.getOrThrow().isSuccess()) {
+                    // 请求设备列表信息失败，延时重试
+                    delay(2000)
+                    continue
+                }
+                emit(
+                    result.getOrThrow().devices.map {
+                        BoundDeviceInfo(
+                            deviceId = it.deviceId,
+                            deviceName = it.deviceName,
+                            isOnline = it.isOnline,
+                            isSandbox = it.isSandbox
+                        )
+                    }
+                )
+                return@transformLatest
+            }
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val subscribedDeviceInfos: Flow<List<SubscribedDeviceInfo>> =
@@ -129,24 +168,32 @@ class StateWidgetViewModel(application: Application) : WidgetViewModel(applicati
                 val stateWidgetUiState: Flow<StateWidgetUiState> = combineLatest(
                     commonConfiguration,
                     stateConfigurations,
+                    boundDeviceInfos,
                     subscribedDeviceInfos
-                ) { _commonConfiguration, _stateConfigurations, _subscribedDeviceInfos ->
+                ) { _commonConfiguration, _stateConfigurations, _boundDeviceInfos, _subscribedDeviceInfos ->
                     if (_commonConfiguration == null) {
                         // 通用配置为空，直接返回
                         return@combineLatest StateWidgetUiState.Idle
                     }
                     StateWidgetUiState.Success(
-                        itemStateList = _stateConfigurations.map { stateConfiguration ->
+                        itemStateList = _stateConfigurations.mapNotNull { stateConfiguration ->
+                            val boundDeviceInfo: BoundDeviceInfo? = _boundDeviceInfos
+                                .find { it.deviceId == stateConfiguration.deviceId }
+                            if (boundDeviceInfo == null) {
+                                // 如果未获取到绑定设备列表，则不显示设备
+                                return@mapNotNull null
+                            }
                             val subscribedDeviceInfo: SubscribedDeviceInfo? = _subscribedDeviceInfos
                                 .find { it.deviceId == stateConfiguration.deviceId }
                             val attrsValue: JsonElement? = subscribedDeviceInfo?.attributes?.getAsJsonPrimitive(stateConfiguration.attrsKey)
                             StateWidgetItemState(
                                 language = stateConfiguration.language,
                                 languageKey = _commonConfiguration.languageKey,
-                                nameId = stateConfiguration.nameId,
+                                editName = stateConfiguration.editName,
                                 stateId = stateConfiguration.id,
                                 icon = stateConfiguration.icon,
                                 title = stateConfiguration.title,
+                                deviceName = boundDeviceInfo.deviceName,
                                 deviceId = stateConfiguration.deviceId,
                                 attrsKey = stateConfiguration.attrsKey,
                                 attrsValue = attrsValue,
@@ -161,8 +208,9 @@ class StateWidgetViewModel(application: Application) : WidgetViewModel(applicati
                 // 当前桌面无小组件，关闭小组件服务
                 emit(StateWidgetUiState.Idle)
             }
-        }.onEach {
+        }.onStart {
             StateWidgetProvider.updateAppWidget(application)
+        }.onEach {
             StateWidgetProvider.notifyAppWidgetViewDataChanged(application)
         }.stateIn(
             scope = viewModelScope,
@@ -198,15 +246,23 @@ sealed interface StateWidgetUiState {
 data class StateWidgetItemState(
     val language: JsonObject,
     val languageKey: String,
-    val nameId: String,
+    val editName: String,
     val stateId: Int,
     val icon: String?,
     val title: StateTitle?,
+    val deviceName: String,
     val deviceId: String,
     val attrsKey: String,
     val attrsValue: JsonElement?,
     val contentList: List<StateContent>,
     var isOnline: Boolean
+)
+
+private data class BoundDeviceInfo(
+    val deviceId: String,
+    val deviceName: String,
+    val isOnline: Boolean,
+    val isSandbox: Boolean
 )
 
 private data class SubscribedDeviceInfo(
@@ -216,16 +272,16 @@ private data class SubscribedDeviceInfo(
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
-public fun <T1, T2, T3, R> combineLatest(
+public fun <T1, T2, T3, T4, R> combineLatest(
     flow1: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,
-    transform: suspend (a: T1, b: T2, c: T3) -> R
+    flow4: Flow<T4>,
+    transform: suspend (a: T1, b: T2, c: T3, d: T4) -> R
 ): Flow<R> {
-    return combine(flow1, flow2, flow3) { value1, value2, value3 ->
-        Triple(value1, value2, value3)
+    return combine(flow1, flow2, flow3, flow4) { value1, value2, value3, value4 ->
+        listOf(value1, value2, value3 ,value4)
     }.mapLatest {
-        transform(it.first, it.second, it.third)
+        transform(it[0] as T1, it[1] as T2, it[2] as T3, it[3] as T4)
     }
 }
-
