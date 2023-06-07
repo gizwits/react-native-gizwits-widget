@@ -47,6 +47,8 @@ data class UserDevice(
     @SerializedName("product_name")
     val deviceName: String,
     @SerializedName("is_online")
-    val isOnline: Boolean
+    val isOnline: Boolean,
+    @SerializedName("is_sandbox")
+    val isSandbox: Boolean
 )
 

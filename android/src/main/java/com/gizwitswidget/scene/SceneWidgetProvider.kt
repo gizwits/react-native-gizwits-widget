@@ -5,60 +5,78 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
+import com.gizwitswidget.AppWidgetController
 import com.gizwitswidget.R
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import com.gizwitswidget.model.AppWidgetConfiguration
-import com.gizwitswidget.model.SceneConfiguration
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import com.gizwitswidget.control.ControlWidgetProvider
+import com.gizwitswidget.control.ControlWidgetView
 
 class SceneWidgetProvider : AppWidgetProvider() {
 
+    /**
+     * 场景小组件事件回调接口
+     */
+    override fun onReceive(context: Context, intent: Intent) {
+        // 处理小组件事件之前确保小组件视图已初始化
+        AppWidgetController.activateAppWidget(context)
+        // 分发小组件事件
+        super.onReceive(context, intent)
+        // 处理小组件点击事件
+        when (intent.action) {
+            SceneWidgetView.ACTION_EXECUTE_SCENE -> {
+                val homeId: Int = intent.getIntExtra(SceneWidgetView.EXTRA_HOME_ID, 0)
+                val sceneId: Int = intent.getIntExtra(SceneWidgetView.EXTRA_SCENE_ID, 0)
+                SceneWidgetView.onClickSceneButton(homeId, sceneId)
+            }
+        }
+    }
+
+    /**
+     * 当场景小组件被首次添加时，回调此方法，激活小组件相关服务
+     * @param context 上下文对象
+     */
+    override fun onEnabled(context: Context?) {
+        SceneWidgetView.onEnabled()
+    }
+
+    /**
+     * 当场景小组件被通知更新时，回调此方法，更新小组件的视图内容
+     * @param context 上下文对象
+     * @param appWidgetManager 小组件管理器
+     * @param appWidgetIds 已被添加的小组件id集合
+     */
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        updateSceneWidgetView(context)
+        // 获取并更新小组件视图
+        updateAppWidget(context)
     }
 
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-        when (intent.action) {
-            SceneWidgetController.ACTION_EXECUTE_SCENE -> {
-                val sceneId: Int = intent.getIntExtra(SceneWidgetController.EXTRA_SCENE_ID, 0)
-                SceneWidgetController.executeScene(sceneId)
-            }
-        }
+    /**
+     * 当场景小组件被完全移除之后，回调此方法，释放小组件相关服务
+     * @param context 上下文对象
+     */
+    override fun onDisabled(context: Context) {
+        SceneWidgetView.onDisabled()
     }
 
     companion object {
 
-        fun isEnabled(context: Context): Boolean {
-            val component = ComponentName(context, SceneWidgetProvider::class.java)
-            return AppWidgetManager.getInstance(context).getAppWidgetIds(component).isNotEmpty()
-        }
-
-        fun updateSceneWidgetView(context: Context) {
+        fun updateAppWidget(context: Context) {
             val component = ComponentName(context, SceneWidgetProvider::class.java)
             AppWidgetManager.getInstance(context).apply {
-                getAppWidgetIds(component).forEach { appWidgetId ->
+                val appWidgetIds: IntArray = getAppWidgetIds(component)
+                if (appWidgetIds.isNotEmpty()) {
                     updateAppWidget(
-                        appWidgetId,
-                        SceneWidgetController.getSceneWidgetView(context, appWidgetId)
+                        appWidgetIds,
+                        SceneWidgetView.onCreateView(context, appWidgetIds)
                     )
                 }
             }
         }
 
-        fun updateSceneWidgetListView(context: Context) {
+        fun notifyAppWidgetViewDataChanged(context: Context) {
             val component = ComponentName(context, SceneWidgetProvider::class.java)
             AppWidgetManager.getInstance(context).apply {
                 notifyAppWidgetViewDataChanged(getAppWidgetIds(component), R.id.scene_list)
@@ -68,6 +86,7 @@ class SceneWidgetProvider : AppWidgetProvider() {
     }
 
 }
+
 
 
 

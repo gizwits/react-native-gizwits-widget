@@ -3,10 +3,8 @@ package com.gizwitswidget.control
 import android.content.Intent
 import android.widget.RemoteViewsService
 
-internal class ControlWidgetService : RemoteViewsService() {
+class ControlWidgetService : RemoteViewsService() {
 
-    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
-        return ControlWidgetListFactory(applicationContext)
-    }
+    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory = ControlWidgetView
 
 }

@@ -16,7 +16,7 @@ class StateConfiguration {
     lateinit var attrsKey: String
 
     @SerializedName("editName")
-    lateinit var nameId: String
+    lateinit var editName: String
 
     @SerializedName("title")
     val title: StateTitle? = null
