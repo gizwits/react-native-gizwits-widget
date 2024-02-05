@@ -1,7 +1,7 @@
 {
   "name": "react-native-gizwits-widget",
-  "version": "2.0.7",
-  "description": "兼容70RN",
+  "version": "2.0.8",
+  "description": "更新icon",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
